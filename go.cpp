@@ -21,47 +21,20 @@ struct GoBoard {
     short board [BOARD_SIZE][BOARD_SIZE];
     queue<Coord> board_cache;
     bool visited [BOARD_SIZE][BOARD_SIZE];
-    
+
     void setUpBoard(){
         for (int i = 0; i < BOARD_SIZE; i ++){
             for (int j = 0; j < BOARD_SIZE; j ++){
                 board[j][i] = 0;
                 visited[j][i] = false;
-            }    
+            }
         }
     }
 
     bool playMove(short player, short x, short y){
         board[y][x] = player;
 
-        if(checkLiberties(x-1,y) == 0){
-            while(!board_cache.empty()){
-                Coord fuck = board_cache.front();
-                board_cache.pop();
-            }
-        }else{
-            board_cache = queue<Coord>();
-        }
-
-        if(checkLiberties(x+1,y) == 0){
-            while(!board_cache.empty()){
-                Coord fuck = board_cache.front();
-                board_cache.pop();
-            }
-        }else{
-            board_cache = queue<Coord>();
-        }
-
-        if(checkLiberties(x,y-1) == 0){
-            while(!board_cache.empty()){
-                Coord fuck = board_cache.front();
-                board_cache.pop();
-            }
-        }else{
-            board_cache = queue<Coord>();
-        }
-
-        if(checkLiberties(x,y+1) == 0){
+        if(checkLiberties(x-1,y) == 0 || checkLiberties(x+1,y) == 0 || checkLiberties(x,y-1) == 0 || checkLiberties(x,y+1) == 0){
             while(!board_cache.empty()){
                 Coord fuck = board_cache.front();
                 board_cache.pop();
@@ -111,13 +84,13 @@ struct GoBoard {
             out += checkLiberties(x,y+1);
         }
         return out;
-    } 
+    }
 
     void print(){
         for (int i = 0; i < BOARD_SIZE; i ++){
             for (int j = 0; j < BOARD_SIZE; j ++){
                 cout << "    " << board[i][j];
-            }    
+            }
             cout << endl;
         }
         cout << endl;
