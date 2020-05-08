@@ -1,5 +1,6 @@
 #include <iostream>
 #include <queue>
+
 using namespace std;
 
 #define NUM_MATCHES 50
@@ -14,10 +15,13 @@ struct Coord{
     }
 };
 
+queue<Coord> empty;
+
 struct GoBoard {
     short board [BOARD_SIZE][BOARD_SIZE];
     queue<Coord> board_cache;
     bool visited [BOARD_SIZE][BOARD_SIZE];
+    
     void setUpBoard(){
         for (int i = 0; i < BOARD_SIZE; i ++){
             for (int j = 0; j < BOARD_SIZE; j ++){
@@ -29,38 +33,49 @@ struct GoBoard {
 
     bool playMove(short player, short x, short y){
         board[y][x] = player;
+
+        if(checkLiberties(x-1,y) == 0){
+            while(!board_cache.empty()){
+                Coord fuck = board_cache.front();
+                board_cache.pop();
+            }
+        }else{
+            board_cache = queue<Coord>();
+        }
+
+        if(checkLiberties(x+1,y) == 0){
+            while(!board_cache.empty()){
+                Coord fuck = board_cache.front();
+                board_cache.pop();
+            }
+        }else{
+            board_cache = queue<Coord>();
+        }
+
+        if(checkLiberties(x,y-1) == 0){
+            while(!board_cache.empty()){
+                Coord fuck = board_cache.front();
+                board_cache.pop();
+            }
+        }else{
+            board_cache = queue<Coord>();
+        }
+
+        if(checkLiberties(x,y+1) == 0){
+            while(!board_cache.empty()){
+                Coord fuck = board_cache.front();
+                board_cache.pop();
+            }
+        }else{
+            board_cache = queue<Coord>();
+        }
+
         if(checkLiberties(x,y) == 0){
             board[y][x] = 0;
             return false;
         }
-        if(checkLiberties(x+1,y) == 0){
-            while(!board_cache.empty()){
-                Coord a = board_cache.front();
-                board[a.y][a.x] = 0;
-                board_cache.pop();
-            }
-        }
-        if(checkLiberties(x-1,y) == 0){
-            while(!board_cache.empty()){
-                Coord a = board_cache.front();
-                board[a.y][a.x] = 0;
-                board_cache.pop();
-            }
-        }
-        if(checkLiberties(x,y+1) == 0){
-            while(!board_cache.empty()){
-                Coord a = board_cache.front();
-                board[a.y][a.x] = 0;
-                board_cache.pop();
-            }
-        }
-        if(checkLiberties(x,y-1) == 0){
-            while(!board_cache.empty()){
-                Coord a = board_cache.front();
-                board[a.y][a.x] = 0;
-                board_cache.pop();
-            }
-        }
+
+        return true;
     }
     int checkLiberties(short x, short y) {
         if(y < 0 || y >= BOARD_SIZE || x < 0 || x >= BOARD_SIZE) {return 0;}
@@ -105,16 +120,31 @@ struct GoBoard {
             }    
             cout << endl;
         }
-    }
-
-    void printDead(){
-        
+        cout << endl;
     }
 };
 
 int main() {
     GoBoard board;
     board.setUpBoard();
+    /*board.playMove(1,0,0);
+    board.playMove(1,1,0);
+    board.playMove(1,0,1);
+    board.playMove(1,2,0);
+    board.playMove(1,0,2);
+    board.playMove(1,2,1);
+    board.playMove(1,1,2);
+    board.playMove(1,2,2);
+    board.playMove(1,3,0);
+    board.playMove(1,4,0);
+    board.playMove(1,4,1);
+    board.playMove(1,4,2);
+    board.playMove(1,3,2);
+    board.print();
+    bool a = board.playMove(2,1,1);
+    cout << "Legal? - " << (a ? "true" : "false") << endl;*/
     board.playMove(1,1,0);
     board.print();
 }
+
+
