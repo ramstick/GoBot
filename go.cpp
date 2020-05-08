@@ -33,6 +33,7 @@ struct GoBoard {
 
     bool playMove(short player, short x, short y){
         if(board[y][x]>0){
+            cout<<"poop try again";
             return false;
         }
         board[y][x] = player;
@@ -48,6 +49,7 @@ struct GoBoard {
 
         if(checkLiberties(x,y) == 0){
             board[y][x] = 0;
+            cout<<"poop try again";
             return false;
         }
 
@@ -103,19 +105,13 @@ struct GoBoard {
 int main() {
     GoBoard board;
     board.setUpBoard();
-    board.playMove(1,0,0);
-    board.playMove(1,1,0);
-    board.playMove(1,0,1);
-    board.playMove(1,2,0);
-    board.playMove(1,0,2);
-    board.playMove(1,2,1);
-    board.playMove(1,1,2);
-    board.playMove(1,2,2);
-    board.print();
-    bool a = board.playMove(2,1,1);
-    cout << "Legal? - " << (a ? "true" : "false") << endl;
-    board.playMove(1,1,0);
-    board.print();
+    while(true){
+        int a, b, c;
+        cin>>a>>b>>c;
+        board.playMove(a, b, c);
+        board.print();
+    }
+
 }
 
 
