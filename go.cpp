@@ -64,7 +64,7 @@ struct GoBoard {
     }
     int checkLiberties(short x, short y) {
         if(y < 0 || y >= BOARD_SIZE || x < 0 || x >= BOARD_SIZE) {return 0;}
-        if(board[x][y]==0) {return 1;}
+        if(board[y][x]==0) {return 1;}
         if(visited[y][x]) {return 0;}
         visited[y][x] = true;
         cout << x << " " << y << endl;
